@@ -1,11 +1,32 @@
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Features from './components/Features'
 import Stats from './components/Stats'
 import Contact from './components/Contact'
+import PrivacyPolicy from './components/PrivacyPolicy'
 import Footer from './components/Footer'
 
+function useHashRoute() {
+  const [hash, setHash] = useState(() => window.location.hash)
+  useEffect(() => {
+    const onChange = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onChange)
+    return () => window.removeEventListener('hashchange', onChange)
+  }, [])
+  return hash
+}
+
 function App() {
+  const route = useHashRoute()
+  const isPrivacy = route.startsWith('#/privacy')
+
+  useEffect(() => {
+    if (isPrivacy) {
+      window.scrollTo(0, 0)
+    }
+  }, [isPrivacy])
+
   return (
     <div className="min-h-screen bg-ink text-slate-100 antialiased">
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -14,10 +35,16 @@ function App() {
       </div>
       <Navbar />
       <main>
-        <Hero />
-        <Features />
-        <Stats />
-        <Contact />
+        {isPrivacy ? (
+          <PrivacyPolicy />
+        ) : (
+          <>
+            <Hero />
+            <Features />
+            <Stats />
+            <Contact />
+          </>
+        )}
       </main>
       <Footer />
     </div>

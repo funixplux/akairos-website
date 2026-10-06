@@ -6,6 +6,8 @@ type Status = 'idle' | 'success'
 function Contact() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [smsConsent, setSmsConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -85,6 +87,53 @@ function Contact() {
                 placeholder="ada@company.com"
                 className="rounded-xl border border-white/10 bg-ink/60 px-4 py-3 text-white placeholder:text-slate-500 focus:border-akairos-400 focus:ring-2 focus:ring-akairos-500/40 focus:outline-none"
               />
+            </div>
+            <div className="flex flex-col gap-2 text-left">
+              <label htmlFor="phone" className="text-sm font-medium text-slate-300">
+                Mobile phone
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                required
+                autoComplete="tel"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+                placeholder="+1 (555) 123-4567"
+                aria-describedby="sms-disclosure"
+                className="rounded-xl border border-white/10 bg-ink/60 px-4 py-3 text-white placeholder:text-slate-500 focus:border-akairos-400 focus:ring-2 focus:ring-akairos-500/40 focus:outline-none"
+              />
+              <label
+                htmlFor="sms-consent"
+                className="mt-1 flex items-start gap-3 text-left"
+              >
+                <input
+                  id="sms-consent"
+                  name="sms-consent"
+                  type="checkbox"
+                  required
+                  checked={smsConsent}
+                  onChange={(event) => setSmsConsent(event.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 rounded border-white/20 bg-ink/60 text-akairos-500 focus:ring-2 focus:ring-akairos-500/40"
+                />
+                <span
+                  id="sms-disclosure"
+                  className="text-xs leading-relaxed text-slate-400"
+                >
+                  By providing your phone number, you agree to receive text
+                  messages from Akairos. Reply STOP to cancel, HELP for help.
+                  Message frequency varies. Message and data rates may apply. See
+                  our{' '}
+                  <a
+                    href="#/privacy"
+                    className="text-akairos-300 underline underline-offset-2 hover:text-akairos-200"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </span>
+              </label>
             </div>
             <button
               type="submit"

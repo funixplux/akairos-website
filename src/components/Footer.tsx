@@ -18,6 +18,9 @@ function Footer() {
           <a href="#contact" className="transition-colors hover:text-white">
             Contact
           </a>
+          <a href="#/privacy" className="transition-colors hover:text-white">
+            Privacy Policy
+          </a>
         </div>
       </div>
     </footer>
